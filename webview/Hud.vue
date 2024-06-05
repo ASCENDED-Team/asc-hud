@@ -28,16 +28,20 @@
                         />
                     </svg>
                 </div>
-                <h2 class="absolute bottom-0 pl-40 font-extrabold text-white">KMH: {{ convertMPHtoKPH(speed) }}</h2>
-                <h2 class="absolute bottom-10 pl-40 font-extrabold text-white">MPH: {{ speed }}</h2>
+                <h2 class="absolute bottom-20 pl-40 font-extrabold text-white">KMH: {{ testSpeed }}</h2>
+                <h2 class="bottom-30 absolute pl-40 font-extrabold text-white">MPH: {{ speed * 2.236936 }}</h2>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { watch, ref } from 'vue';
+import { onMounted, watch, ref } from 'vue';
 import { usePlayerStats } from '../../../../webview/composables/usePlayerStats';
+import { HudConfig } from '../shared/config';
+import { useEvents } from '../../../../webview/composables/useEvents';
+
+const events = useEvents();
 
 const {
     health,
@@ -63,36 +67,42 @@ const {
     weapon,
 } = usePlayerStats();
 
-let meterBar = ref(0);
-let meterBG = ref(615);
+const isMetric = HudConfig.metric;
+const maxSpeed = isMetric ? 260 : 160;
+const testSpeed = ref(0);
+
+const meterBar = ref(615);
+const meterBG = ref(0);
 
 function updateMeterBar(speed) {
-    if (speed < 0) speed = 0;
-    if (speed > 260) speed = 260;
+    const convertedSpeed = speed;
 
-    const newStrokeDashoffsetBar = 615 - (speed / 180) * 615;
-    const newStrokeDashoffsetBG = (speed / 180) * 615;
+    const newStrokeDashoffsetBar = 615 - (convertedSpeed / maxSpeed) * 615;
+    const newStrokeDashoffsetBG = (convertedSpeed / maxSpeed) * 615;
 
-    meterBar = newStrokeDashoffsetBar;
-    meterBG = newStrokeDashoffsetBG;
-    console.log(newStrokeDashoffsetBar);
+    meterBar.value = newStrokeDashoffsetBar;
+    meterBG.value = newStrokeDashoffsetBG;
 }
 
-function convertMPHtoKPH(mph) {
-    return mph * 1.60934;
+function convertSpeed(speed) {
+    return isMetric ? speed * 3.6 : speed * 2.236936;
 }
 
-watch(speed, (newSpeed) => {
+watch(testSpeed, (newSpeed) => {
     updateMeterBar(newSpeed);
+});
+
+onMounted(() => {
+    events.on('setSpeed', (newSpeed) => {
+        testSpeed.value = newSpeed;
+    });
 });
 </script>
 
 <style>
 .tacho-meter-bar {
+    filter: drop-shadow(1px 1px 4px #553adf);
     -webkit-filter: drop-shadow(1px 1px 4px #553adf);
-    -moz-filter: drop-shadow(1px 1px 4px #553adf);
-    -ms-filter: drop-shadow(1px 1px 4px #553adf);
-    -o-filter: drop-shadow(1px 1px 4px #553adf);
 }
 
 .tacho svg {
