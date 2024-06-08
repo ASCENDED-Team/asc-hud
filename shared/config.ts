@@ -1,3 +1,3 @@
 export const HudConfig = {
-    metric: false,
+    metric: true,
 };

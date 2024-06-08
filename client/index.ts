@@ -1,9 +1,13 @@
 import alt from 'alt-client';
+import native from 'natives';
 import { useWebview } from '@Client/webview/index.js';
 
 useWebview().show('Hud', 'overlay');
 
+// Remove this if you don't want to hide these components
 alt.everyTick(() => {
-    const speed = alt.Player.local.vehicle ? alt.Player.local.vehicle.speed : alt.Player.local.moveSpeed;
-    alt.log(`Speed: ${speed}`);
+    native.hideHudComponentThisFrame(6); // Vehicle Name
+    native.hideHudComponentThisFrame(8); // Vehicle Class
+    native.hideHudComponentThisFrame(9); // Street Name
+    native.hideHudComponentThisFrame(7); // Area Name
 });
