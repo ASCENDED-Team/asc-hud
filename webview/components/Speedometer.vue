@@ -1,13 +1,13 @@
 <template>
     <div class="tacho absolute bottom-5 right-12 w-auto">
         <div
-            class="tacho-wrapper relative h-[270px] w-[270px] rounded-full bg-gradient-to-t from-slate-400/20 to-slate-800/50"
+            class="tacho-wrapper relative h-[270px] w-[270px] rounded-full bg-gradient-to-t from-gray-500/20 to-transparent"
         >
             <TachoMeter :speed="convertSpeed(speed)" :isMetric="isMetric" />
             <Fuel />
         </div>
         <Speed :speed="convertSpeed(speed).toFixed(0)" :isMetric="isMetric" />
-        <VehicleData :engineOn="engineOn" :headlights="headlights" :highbeams="highbeams" />
+        <VehicleData :engineOn="engineOn" :headlights="headlights" :highbeams="highbeams" :seatBelt="seatBelt" />
     </div>
 </template>
 
@@ -17,7 +17,7 @@ import Fuel from './speedo/fuel.vue';
 import Speed from './speedo/speed.vue';
 import VehicleData from './speedo/vehicledata.vue';
 
-const { speed, gear, maxGear, engineOn, headlights, highbeams, isMetric } = defineProps([
+const { speed, gear, maxGear, engineOn, headlights, highbeams, isMetric, seatBelt } = defineProps([
     'speed',
     'gear',
     'maxGear',
@@ -25,6 +25,7 @@ const { speed, gear, maxGear, engineOn, headlights, highbeams, isMetric } = defi
     'headlights',
     'highbeams',
     'isMetric',
+    'seatBelt',
 ]);
 
 function convertSpeed(speed) {

@@ -1,17 +1,23 @@
 <template>
     <div class="tacho-vehicle-data absolute -bottom-1 left-1/2 flex -translate-x-1/2 transform gap-2">
         <Lights :class="{ active: headlights || highbeams }" :headlights="headlights" :highbeams="highbeams" />
+        <Lock class="mt-3" />
         <Engine :class="{ active: engineOn }" class="mt-3" />
-        <Engine class="mt-3" />
-        <Engine />
+        <Seatbelt :class="{ active: seatBelt }" />
     </div>
 </template>
 
 <script setup>
 import Lights from './lights.vue';
+import Lock from './lock.vue';
 import Engine from './engine.vue';
+import Seatbelt from './seatbelt.vue';
 
-const { engineOn, headlights, highbeams } = defineProps(['engineOn', 'headlights', 'highbeams']);
+const { engineOn, headlights, highbeams, seatBelt } = defineProps(['engineOn', 'headlights', 'highbeams', 'seatBelt']);
 </script>
 
-<style></style>
+<style>
+.tacho-details.active > div {
+    background: linear-gradient(to bottom, var(--hud-color), transparent) !important;
+}
+</style>

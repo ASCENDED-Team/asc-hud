@@ -4,8 +4,8 @@
             <path
                 id="meter-bar"
                 :style="{ 'stroke-dashoffset': meterBar }"
+                class="stroke-[var(--hud-color)]"
                 d="m21.96,198.97c-12.33-19.72-19.46-43.03-19.46-68.01C2.5,60.01,60.01,2.5,130.96,2.5s128.46,57.51,128.46,128.46c0,24.98-7.13,48.29-19.46,68.01"
-                stroke="#553adf"
                 stroke-width="5px"
             />
         </svg>
@@ -48,9 +48,10 @@ watch(speed, (newSpeed) => {
 </script>
 
 <style>
-.tacho-meter-bar {
-    filter: drop-shadow(1px 1px 4px #553adf);
-    -webkit-filter: drop-shadow(1px 1px 4px #553adf);
+.tacho-meter-bar,
+.tacho-details.active {
+    filter: drop-shadow(0px 0px 10px var(--hud-color));
+    -webkit-filter: drop-shadow(0px 0px 10px var(--hud-color));
 }
 
 #meter-bar,

@@ -5,7 +5,7 @@
                 <path
                     id="fuel-bar"
                     :style="{ 'stroke-dashoffset': fuelBar }"
-                    stroke="#553adf"
+                    class="stroke-[var(--hud-color)]"
                     stroke-width="8px"
                     d="m0,4c81.13,0,146.9,65.77,146.9,146.9,0,28.56-8.15,55.22-22.25,77.77"
                 />

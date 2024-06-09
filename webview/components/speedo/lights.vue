@@ -1,8 +1,6 @@
 <template>
     <div class="tacho-details group">
-        <div
-            class="tacho-lights rounded-md bg-gradient-to-b from-slate-400/60 to-transparent px-1 pb-8 pt-1 group-[.active]:from-purple-500/60"
-        >
+        <div class="tacho-lights rounded-md bg-gradient-to-b from-slate-400/20 to-transparent px-1 pb-8 pt-1">
             <svg v-if="highbeams" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                 <g fill="none">
                     <path
