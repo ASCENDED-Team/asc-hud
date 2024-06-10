@@ -1,5 +1,17 @@
 <template>
     <div class="h-screen w-screen">
+        <Transition name="slide">
+            <Coords
+                :direction="direction"
+                :street="street"
+                class="absolute bottom-[10px] left-[50px] transition-all duration-500 ease-in-out"
+                :style="getCoordsStylePosition"
+            />
+        </Transition>
+        <Vitality
+            class="absolute bottom-[70px] left-[50px] transition-all duration-500 ease-in-out"
+            :style="getVitalityStylePosition"
+        />
         <Transition name="slide-fade">
             <Speedometer
                 v-if="inVehicle"
@@ -7,6 +19,7 @@
                 :gear="gear"
                 :maxGear="maxGear"
                 :engineOn="engineOn"
+                :locked="locked"
                 :headlights="headlights"
                 :highbeams="highbeams"
                 :isMetric="HudConfig.metric"
@@ -17,16 +30,21 @@
 </template>
 
 <script setup>
-import { onMounted, watch, ref } from 'vue';
+import { onMounted, computed, watch, ref } from 'vue';
 import { usePlayerStats } from '../../../../webview/composables/usePlayerStats';
+import { useMinimap } from '../../../../webview/composables/useMinimap';
 import { useAudio } from '../../../../webview/composables/useAudio';
 import { HudConfig } from '../shared/config';
 import { useEvents } from '../../../../webview/composables/useEvents';
 
+import Coords from './components/Street.vue';
+import Vitality from './components/Vitality.vue';
 import Speedometer from './components/Speedometer.vue';
 
 const audio = useAudio();
 const events = useEvents();
+
+const { minimap } = useMinimap();
 
 const {
     health,
@@ -35,7 +53,9 @@ const {
     weather,
     crossingRoad,
     street,
+    direction,
     engineOn,
+    locked,
     fps,
     gear,
     headlights,
@@ -66,6 +86,39 @@ function setSeatbelt(value) {
     }
 }
 
+const getCoordsStylePosition = computed(() => {
+    if (!minimap.value) {
+        return ``;
+    }
+
+    if (HudConfig.hideMinimapOnFoot && !inVehicle.value) {
+        return [`left: ${minimap.value.left}px`, `bottom: 10px`, `width: ${minimap.value.width}px`];
+    }
+
+    return [
+        `left: ${minimap.value.left}px`,
+        `bottom: ${minimap.value.screenHeight - minimap.value.bottom + minimap.value.height}px`,
+        `width: ${minimap.value.width}px`,
+    ];
+});
+
+const getVitalityStylePosition = computed(() => {
+    if (!minimap.value) {
+        return ``;
+    }
+
+    if (HudConfig.hideMinimapOnFoot && !inVehicle.value) {
+        return [
+            `left: ${minimap.value.left - 8}px`,
+            `bottom: 70px`,
+            `width: ${minimap.value.width}px`,
+            `flex-direction: row`,
+        ];
+    }
+
+    return [`left: ${minimap.value.left + minimap.value.width}px`, `top: ${minimap.value.top}px`];
+});
+
 onMounted(() => {
     events.on('ASC:HUD:SEATBELT', setSeatbelt);
     document.documentElement.style.setProperty('--hud-color', HudConfig.color);
@@ -85,5 +138,15 @@ onMounted(() => {
 .slide-fade-leave-to {
     transform: translateY(100px);
     opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+    transition: transform 0.5s;
+}
+
+.slide-enter,
+.slide-leave-to {
+    transform: translateX(100%);
 }
 </style>

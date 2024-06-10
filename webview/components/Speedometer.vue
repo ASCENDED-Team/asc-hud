@@ -7,7 +7,13 @@
             <Fuel />
         </div>
         <Speed :speed="convertSpeed(speed).toFixed(0)" :isMetric="isMetric" />
-        <VehicleData :engineOn="engineOn" :headlights="headlights" :highbeams="highbeams" :seatBelt="seatBelt" />
+        <VehicleData
+            :engineOn="engineOn"
+            :locked="locked"
+            :headlights="headlights"
+            :highbeams="highbeams"
+            :seatBelt="seatBelt"
+        />
     </div>
 </template>
 
@@ -17,11 +23,12 @@ import Fuel from './speedo/fuel.vue';
 import Speed from './speedo/speed.vue';
 import VehicleData from './speedo/vehicledata.vue';
 
-const { speed, gear, maxGear, engineOn, headlights, highbeams, isMetric, seatBelt } = defineProps([
+const { speed, gear, maxGear, engineOn, locked, headlights, highbeams, isMetric, seatBelt } = defineProps([
     'speed',
     'gear',
     'maxGear',
     'engineOn',
+    'locked',
     'headlights',
     'highbeams',
     'isMetric',
