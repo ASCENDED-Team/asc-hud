@@ -14,7 +14,6 @@
         />
         <Transition name="slide-fade">
             <Speedometer
-                v-if="inVehicle"
                 :speed="speed"
                 :gear="gear"
                 :maxGear="maxGear"

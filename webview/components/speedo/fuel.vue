@@ -24,8 +24,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { watch, ref, toRefs, defineProps } from 'vue';
+
+const props = defineProps(['fuel']);
+const { fuel } = toRefs(props);
+
 const fuelBar = ref(0);
+
+function calculateFuel() {
+    const calculatedFuel = -313 + (fuel.value / 100) * (0 - -313);
+
+    return calculatedFuel;
+}
+
+watch(fuel, () => {
+    fuelBar.value = calculateFuel();
+});
 </script>
 
 <style>

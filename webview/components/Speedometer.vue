@@ -4,7 +4,7 @@
             class="tacho-wrapper relative h-[270px] w-[270px] rounded-full bg-gradient-to-t from-gray-500/20 to-transparent"
         >
             <TachoMeter :speed="convertSpeed(speed)" :isMetric="isMetric" />
-            <Fuel />
+            <Fuel :fuel="40" />
         </div>
         <Speed :speed="convertSpeed(speed).toFixed(0)" :isMetric="isMetric" />
         <VehicleData
