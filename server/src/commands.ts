@@ -1,5 +1,6 @@
 import * as alt from 'alt-server';
 import { useRebar } from '@Server/index.js';
+import { HUDEvents } from '../../shared/src/events.js';
 
 const Rebar = useRebar();
 const messenger = Rebar.messenger.useMessenger();
@@ -10,10 +11,10 @@ messenger.commands.register({
     callback: async (player: alt.Player) => {
         if (!player.vehicle) return;
 
-        alt.emitClient(player, 'ASC:HUD:SEATBELT');
+        alt.emitClient(player, HUDEvents.ToClient.SEATBELT);
     },
 });
 
 alt.on('playerLeftVehicle', (player: alt.Player) => {
-    alt.emitClient(player, 'ASC:HUD:SEATBELT');
+    alt.emitClient(player, HUDEvents.ToClient.SEATBELT);
 });
