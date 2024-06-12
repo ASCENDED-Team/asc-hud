@@ -40,6 +40,7 @@ import { useEvents } from '../../../../webview/composables/useEvents';
 import Coords from './components/Street.vue';
 import Vitality from './components/Vitality.vue';
 import Speedometer from './components/Speedometer.vue';
+import { HUDEvents } from '../shared/src/events';
 
 const audio = useAudio();
 const events = useEvents();
@@ -120,7 +121,7 @@ const getVitalityStylePosition = computed(() => {
 });
 
 onMounted(() => {
-    events.on('ASC:HUD:SEATBELT', setSeatbelt);
+    events.on(HUDEvents.ToClient.SEATBELT, setSeatbelt);
     document.documentElement.style.setProperty('--hud-color', HudConfig.color);
 });
 </script>

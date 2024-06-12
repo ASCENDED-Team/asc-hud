@@ -23,7 +23,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { watch, ref, toRefs, defineProps } from 'vue';
 
 const props = defineProps(['fuel']);
