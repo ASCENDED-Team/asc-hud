@@ -5,6 +5,7 @@ export const HUDEvents = {
     ToServer: {},
     WebView: {
         PUSH_FUEL: 'asc-hud:push-fuel',
+        PROGRESS_BAR: 'asc-hud-progressbar',
     },
-    RPC: {}
-}
+    RPC: {},
+};

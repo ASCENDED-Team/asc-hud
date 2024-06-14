@@ -15,11 +15,17 @@ function useHudAPI() {
 
         WebView.emit(HUDEvents.WebView.PUSH_FUEL, fuel);
     }
-    
+
+    function startProgress(player: alt.Player, time: number) {
+        const WebView = useWebview(player);
+        WebView.emit(HUDEvents.WebView.PROGRESS_BAR, time);
+    }
+
     return {
         seatbelt,
-        pushFuel
-    }
+        pushFuel,
+        startProgress,
+    };
 }
 
 declare global {

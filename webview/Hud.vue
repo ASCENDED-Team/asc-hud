@@ -12,6 +12,7 @@
             class="absolute bottom-[70px] left-[50px] transition-all duration-500 ease-in-out"
             :style="getVitalityStylePosition"
         />
+        <Progressbar />
         <Transition name="slide-fade">
             <Speedometer
                 v-if="inVehicle"
@@ -39,6 +40,7 @@ import { useEvents } from '../../../../webview/composables/useEvents';
 
 import Coords from './components/Street.vue';
 import Vitality from './components/Vitality.vue';
+import Progressbar from './components/Progressbar.vue';
 import Speedometer from './components/Speedometer.vue';
 import { HUDEvents } from '../shared/src/events';
 
