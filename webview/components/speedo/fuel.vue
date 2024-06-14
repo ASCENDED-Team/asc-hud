@@ -24,15 +24,19 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref, toRefs, defineProps } from 'vue';
+import { watch, ref, toRefs, defineProps, onMounted } from 'vue';
 
 const props = defineProps(['fuel']);
 const { fuel } = toRefs(props);
 
-const fuelBar = ref(0);
+const fuelBar = ref(calculateFuel());
 
 function calculateFuel() {
-    const calculatedFuel = -313 + (fuel.value / 100) * (0 - -313);
+    const maxFuel = 100;
+    const minDisplayValue = -313;
+    const maxDisplayValue = 0;
+    const normalizedFuel = fuel.value / maxFuel;
+    const calculatedFuel = minDisplayValue + normalizedFuel * (maxDisplayValue - minDisplayValue);
 
     return calculatedFuel;
 }
@@ -40,6 +44,10 @@ function calculateFuel() {
 watch(fuel, () => {
     fuelBar.value = calculateFuel();
 });
+
+onMounted(() => {
+    fuelBar.value = calculateFuel();
+})
 </script>
 
 <style>

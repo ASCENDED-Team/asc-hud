@@ -43,8 +43,6 @@ const { speed, gear, maxGear, engineOn, locked, headlights, highbeams, isMetric,
 const fuelPercentage = ref(0);
 events.on(HUDEvents.WebView.PUSH_FUEL, (value: number) => {
     fuelPercentage.value = value
-
-    console.log(`Value is: ${value}`)
 });
 
 function convertSpeed(speed) {
