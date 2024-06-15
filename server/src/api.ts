@@ -16,9 +16,17 @@ function useHudAPI() {
         WebView.emit(HUDEvents.WebView.PUSH_FUEL, fuel);
     }
 
-    function startProgress(player: alt.Player, time: number) {
+    // Time is mantatory, bgcolor, progresscolor, textcolor optional but still use null do avoid messing with color
+    // Color can be red/gray ... or even #30efa6
+    function startProgress(
+        player: alt.Player,
+        time: number,
+        bgcolor?: string,
+        progresscolor?: string,
+        textcolor?: string,
+    ) {
         const WebView = useWebview(player);
-        WebView.emit(HUDEvents.WebView.PROGRESS_BAR, time);
+        WebView.emit(HUDEvents.WebView.PROGRESS_BAR, time, bgcolor, progresscolor, textcolor);
     }
 
     return {

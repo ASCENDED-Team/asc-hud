@@ -2,7 +2,7 @@
     <div>
         <svg viewBox="0 0 40 40" width="80" height="80">
             <!-- Background circle -->
-            <circle cx="20" cy="20" r="16" fill="transparent" stroke="gray" stroke-width="3" />
+            <circle cx="20" cy="20" r="16" fill="transparent" :stroke="bgColor" stroke-width="3" />
 
             <!-- Progress circle -->
             <circle
@@ -10,7 +10,7 @@
                 cy="20"
                 r="16"
                 fill="transparent"
-                stroke="#30efa6"
+                :stroke="progressColor"
                 stroke-width="3"
                 :stroke-dasharray="circumference"
                 :stroke-dashoffset="progressOffset"
@@ -21,7 +21,7 @@
                 y="52%"
                 text-anchor="middle"
                 alignment-baseline="middle"
-                fill="#30efa6"
+                :fill="textColor"
                 font-size="8px"
                 font-weight="bold"
             >
@@ -37,6 +37,9 @@ import { computed, defineProps } from 'vue';
 interface Props {
     totalProgress: number;
     progressCount: number;
+    bgColor: string;
+    progressColor: string;
+    textColor: string;
 }
 
 const props = defineProps<Props>();

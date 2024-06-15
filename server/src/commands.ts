@@ -19,9 +19,9 @@ messenger.commands.register({
 messenger.commands.register({
     name: '/testbar',
     desc: 'Toggle your seatbelt on or off.',
-    callback: async (player: alt.Player, time: number) => {
+    callback: async (player: alt.Player, time: number, bgcolor: string, progresscolor: string, textcolor: string) => {
         if (!time) return; //100 = 10 sec
-        (await api).startProgress(player, time);
+        (await api).startProgress(player, time, bgcolor, progresscolor, textcolor);
     },
 });
 
