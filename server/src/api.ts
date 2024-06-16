@@ -16,23 +16,28 @@ function useHudAPI() {
         WebView.emit(HUDEvents.WebView.PUSH_FUEL, fuel);
     }
 
-    // Time is mantatory, bgcolor, progresscolor, textcolor optional but still use null do avoid messing with color
-    // Color can be red/gray ... or even #30efa6
-    function startProgress(
+    async function createProgressBar(
         player: alt.Player,
         time: number,
-        bgcolor?: string,
-        progresscolor?: string,
-        textcolor?: string,
+        bgColor?: string,
+        progressColor?: string,
+        textColor?: string,
+        callback?: (...args: any[]) => void,
+        callbackArgs: any[] = [],
     ) {
         const WebView = useWebview(player);
-        WebView.emit(HUDEvents.WebView.PROGRESS_BAR, time, bgcolor, progresscolor, textcolor);
+        WebView.emit(HUDEvents.WebView.PROGRESS_BAR, time, bgColor, progressColor, textColor);
+        if (callback) {
+            alt.setTimeout(() => {
+                callback(...callbackArgs);
+            }, time);
+        }
     }
 
     return {
         seatbelt,
         pushFuel,
-        startProgress,
+        createProgressBar,
     };
 }
 

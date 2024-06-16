@@ -45,7 +45,7 @@ events.on(HUDEvents.WebView.PUSH_FUEL, (value: number) => {
     fuelPercentage.value = value
 });
 
-function convertSpeed(speed) {
+function convertSpeed(speed: number) {
     return isMetric ? speed * 3.6 : speed * 2.236936;
 }
 </script>

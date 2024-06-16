@@ -1,6 +1,6 @@
 export const HudConfig = {
     metric: true,
-    color: '#553adf',
+    color: '#FF0000',
     hideHealthArmor: true,
     hideMinimapOnFoot: true,
     hideVehicleName: true,

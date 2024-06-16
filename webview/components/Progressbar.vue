@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 const events = useEvents();
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useEvents } from '@Composables/useEvents';
 import Progress from './progressbar/Progress.vue';
 import { HUDEvents } from '@Plugins/asc-hud/shared/src/events';
@@ -23,26 +23,28 @@ const enableProgress = ref(false);
 const bgColor = ref('grey');
 const progressColor = ref('#30efa6');
 const textColor = ref('#30efa6');
+
 const startProgress = (intervalTime: number) => {
     progressCount.value = 0;
+    const stepTime = intervalTime / 100; 
     const interval = setInterval(() => {
         progressCount.value++;
         if (progressCount.value >= 100) {
             enableProgress.value = false;
             clearInterval(interval);
         }
-    }, intervalTime);
+    }, stepTime);
 };
 
 events.on(
     HUDEvents.WebView.PROGRESS_BAR,
-    (value: number, bgcolor: string, progresscolor: string, textcolor: string) => {
-        console.log(bgcolor, progresscolor);
+    (value: number, backgroundColor: string, barColor: string, textcolor: string) => {
+        console.log(backgroundColor, barColor);
         enableProgress.value = true;
-        bgColor.value = bgcolor ?? bgColor.value;
-        progressColor.value = progresscolor ?? progressColor.value;
+        bgColor.value = backgroundColor ?? bgColor.value;
+        progressColor.value = barColor ?? progressColor.value;
         textColor.value = textcolor ?? textColor.value;
-        console.log(bgcolor, progresscolor, bgColor.value, progressColor.value);
+        console.log(backgroundColor, barColor, bgColor.value, progressColor.value);
         startProgress(value);
     },
 );

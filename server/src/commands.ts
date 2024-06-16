@@ -4,7 +4,7 @@ import { HUDEvents } from '../../shared/src/events.js';
 
 const Rebar = useRebar();
 const messenger = Rebar.messenger.useMessenger();
-const api = Rebar.useApi().getAsync('ascended-hud-api');
+const HudAPI = await Rebar.useApi().getAsync('ascended-hud-api');
 
 messenger.commands.register({
     name: '/seatbelt',
@@ -19,12 +19,19 @@ messenger.commands.register({
 messenger.commands.register({
     name: '/testbar',
     desc: 'test your progress bar. time bgcolor progresscolor textcolor',
-    callback: async (player: alt.Player, time: number, bgcolor: string, progresscolor: string, textcolor: string) => {
-        if (!time) return; //100 = 10 sec
-        (await api).startProgress(player, time, bgcolor, progresscolor, textcolor);
+    callback: async (player: alt.Player, time: number, bgColor: string, progressColor: string, textColor: string) => {
+        if (!time) {
+            time = 1000 * 10; // 10 Seconds
+        }
+        
+        HudAPI.createProgressBar(player, time, bgColor, progressColor, textColor, testFunctionForCallbackProgress);
     },
 });
 
 alt.on('playerLeftVehicle', (player: alt.Player) => {
     alt.emitClient(player, HUDEvents.ToClient.SEATBELT);
 });
+
+function testFunctionForCallbackProgress() {
+    alt.logWarning(`This is just a test!`);
+}
