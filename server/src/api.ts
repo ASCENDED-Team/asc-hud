@@ -23,7 +23,7 @@ function useHudAPI() {
         progressColor?: string,
         textColor?: string,
         callback?: (...args: any[]) => void,
-        callbackArgs: any[] = [],
+        ...callbackArgs: any[]
     ) {
         const WebView = useWebview(player);
         WebView.emit(HUDEvents.WebView.PROGRESS_BAR, time, bgColor, progressColor, textColor);
