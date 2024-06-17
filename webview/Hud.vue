@@ -10,6 +10,8 @@
         </Transition>
         <Vitality
             class="absolute bottom-[70px] left-[50px] transition-all duration-500 ease-in-out"
+            :health="health"
+            :armour="armour"
             :style="getVitalityStylePosition"
         />
         <Progressbar />

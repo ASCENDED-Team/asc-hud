@@ -11,9 +11,12 @@
                     />
                 </svg>
             </div>
-            <div class="vitality-health absolute left-0 h-full w-[5px] bg-red-500"></div>
+            <div
+                class="vitality-health absolute bottom-0 left-0 h-full w-[5px] bg-red-500"
+                :style="{ height: `${health / 2}%` }"
+            ></div>
         </div>
-        <div class="armour-wrapper vitals relative">
+        <div v-if="armour > 0" class="armour-wrapper vitals relative">
             <div
                 class="vitality-shield absolute left-[7px] flex h-full w-full items-center justify-center bg-gradient-to-r from-gray-500/70 to-transparent"
             >
@@ -24,12 +27,17 @@
                     />
                 </svg>
             </div>
-            <div class="vitality-health absolute left-0 h-full w-[5px] bg-blue-500"></div>
+            <div
+                class="vitality-health absolute bottom-0 left-0 h-auto w-[5px] bg-blue-500"
+                :style="{ height: `${armour}%` }"
+            ></div>
         </div>
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+const { health, armour } = defineProps(['health', 'armour']);
+</script>
 
 <style>
 .vitals {
