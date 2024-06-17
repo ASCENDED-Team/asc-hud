@@ -11,7 +11,7 @@ if(HudConfig.versionAPI) {
     const VersionCheckAPI = await useApi().getAsync('ascended-versioncheck-api');
     if (VersionCheckAPI.getAPIState() === true) {
         setTimeout(() => {
-            VersionCheckAPI.checkVersion('https://github.com/ASCENDED-Team/asc-hud', 'asc-hud', 'v1.1');
+            VersionCheckAPI.checkVersion('https://github.com/ASCENDED-Team/asc-hud', 'asc-hud', 'v1.2');
         }, 250);
     }
 }
