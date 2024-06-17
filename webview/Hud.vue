@@ -1,5 +1,6 @@
 <template>
     <div class="h-screen w-screen">
+        <PlayerData :domain="HudConfig.domain" :players="onlinePlayers" :time="formattedTime" />
         <Transition name="slide">
             <Coords
                 id="coordsDiv"
@@ -46,6 +47,7 @@ import Vitality from './components/Vitality.vue';
 import Progressbar from './components/Progressbar.vue';
 import Speedometer from './components/Speedometer.vue';
 import { HUDEvents } from '../shared/src/events';
+import PlayerData from './components/PlayerData.vue';
 
 const audio = useAudio();
 const events = useEvents();
@@ -56,30 +58,20 @@ const {
     health,
     armour,
     speed,
-    weather,
-    crossingRoad,
     street,
     direction,
     engineOn,
     locked,
-    fps,
     gear,
     headlights,
     highbeams,
     inVehicle,
-    inWater,
-    indicatorLights,
-    isTalking,
     maxGear,
-    ping,
-    stamina,
     time,
-    vehicleHealth,
-    weapon,
 } = usePlayerStats();
 
-const coordsDiv = ref(null);
 const seatBelt = ref(false);
+const onlinePlayers = ref(0);
 
 function setSeatbelt(value) {
     seatBelt.value = value;
@@ -129,13 +121,29 @@ const getVitalityStylePosition = computed(() => {
     return [`left: ${minimap.value.left + minimap.value.width}px`, `top: ${minimap.value.top}px`];
 });
 
+const formattedTime = computed(() => {
+    const { hour, minute } = time.value;
+
+    const utcDate = new Date();
+    utcDate.setUTCHours(hour);
+    utcDate.setUTCMinutes(minute);
+
+    const formatter = new Intl.DateTimeFormat('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: HudConfig.timezone,
+    });
+
+    const formatted = formatter.format(utcDate);
+    return formatted;
+});
+
 onMounted(() => {
-    let coordsHeight = document.getElementById('coordsDiv').offsetHeight;
-    let coordsBottom = document.getElementById('coordsDiv').style.bottom;
-
-    console.log(coordsHeight, coordsBottom);
-
     events.on(HUDEvents.ToClient.SEATBELT, setSeatbelt);
+    events.on(HUDEvents.WebView.UPDATE_PLAYERS, (players) => {
+        onlinePlayers.value = players;
+    });
+
     document.documentElement.style.setProperty('--hud-color', HudConfig.color);
 });
 </script>
