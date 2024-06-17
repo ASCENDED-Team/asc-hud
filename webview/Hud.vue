@@ -116,7 +116,7 @@ const getVitalityStylePosition = computed(() => {
 
     if (HudConfig.hideMinimapOnFoot && !inVehicle.value) {
         let coordsHeight = document.getElementById('coordsDiv').offsetHeight;
-        let coordsBottom = document.getElementById('coordsDiv').style.bottom;
+        let coordsBottom = document.getElementById('coordsDiv').style.bottom || 10;
 
         return [
             `left: ${minimap.value.left - 8}px`,
