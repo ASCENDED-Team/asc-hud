@@ -44,4 +44,9 @@ const { health, armour } = defineProps(['health', 'armour']);
     height: calc(1vh * 4);
     width: calc(1vh * 4);
 }
+
+.vitals svg {
+    height: calc(1vh * 2.5);
+    width: calc(1vh * 2.5);
+}
 </style>
