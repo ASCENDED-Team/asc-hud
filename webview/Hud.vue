@@ -2,6 +2,7 @@
     <div class="h-screen w-screen">
         <Transition name="slide">
             <Coords
+                id="coordsDiv"
                 :direction="direction"
                 :street="street"
                 class="absolute bottom-[10px] left-[50px] transition-all duration-500 ease-in-out"
@@ -33,7 +34,7 @@
 </template>
 
 <script setup>
-import { onMounted, computed, watch, ref } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import { usePlayerStats } from '../../../../webview/composables/usePlayerStats';
 import { useMinimap } from '../../../../webview/composables/useMinimap';
 import { useAudio } from '../../../../webview/composables/useAudio';
@@ -77,6 +78,7 @@ const {
     weapon,
 } = usePlayerStats();
 
+const coordsDiv = ref(null);
 const seatBelt = ref(false);
 
 function setSeatbelt(value) {
@@ -113,9 +115,12 @@ const getVitalityStylePosition = computed(() => {
     }
 
     if (HudConfig.hideMinimapOnFoot && !inVehicle.value) {
+        let coordsHeight = document.getElementById('coordsDiv').offsetHeight;
+        let coordsBottom = document.getElementById('coordsDiv').style.bottom;
+
         return [
             `left: ${minimap.value.left - 8}px`,
-            `bottom: 70px`,
+            `bottom: ${coordsHeight * 2 - coordsBottom}px`,
             `width: ${minimap.value.width}px`,
             `flex-direction: row`,
         ];
@@ -125,6 +130,11 @@ const getVitalityStylePosition = computed(() => {
 });
 
 onMounted(() => {
+    let coordsHeight = document.getElementById('coordsDiv').offsetHeight;
+    let coordsBottom = document.getElementById('coordsDiv').style.bottom;
+
+    console.log(coordsHeight, coordsBottom);
+
     events.on(HUDEvents.ToClient.SEATBELT, setSeatbelt);
     document.documentElement.style.setProperty('--hud-color', HudConfig.color);
 });
