@@ -4,7 +4,7 @@ export const HudConfig = {
     maxPlayers: 256,
     timezone: 'Europe/Berlin', // You can find these here [TZ identifier]: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     color: '#553adf',
-    enableSeatbelt: false,
+    enableSeatbelt: true,
     hideHealthArmor: true,
     hideMinimapOnFoot: true,
     hideVehicleName: true,
