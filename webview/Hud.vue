@@ -141,7 +141,7 @@ const formattedTime = computed(() => {
 });
 
 onMounted(() => {
-    events.on(HUDEvents.ToClient.SEATBELT, setSeatbelt);
+    events.on(HUDEvents.WebView.SEATBELT, setSeatbelt);
     events.on(HUDEvents.WebView.UPDATE_PLAYERS, (players) => {
         onlinePlayers.value = players;
     });

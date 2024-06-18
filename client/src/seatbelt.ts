@@ -20,7 +20,7 @@ function setSeatbelt() {
     alt.Player.local.setMeta('SEATBELT', value);
     native.setPedConfigFlag(alt.Player.local.scriptID, 32, value);
 
-    useWebview().emit(HUDEvents.ToClient.SEATBELT, value);
+    useWebview().emit(HUDEvents.WebView.SEATBELT, value);
 }
 
 alt.onServer(HUDEvents.ToClient.SEATBELT, setSeatbelt);

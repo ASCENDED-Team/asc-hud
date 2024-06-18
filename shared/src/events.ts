@@ -7,6 +7,7 @@ export const HUDEvents = {
         UPDATE_PLAYERS: 'ASC:HUD:UPDATEPLAYERS',
         PUSH_FUEL: 'asc-hud:push-fuel',
         PROGRESS_BAR: 'asc-hud-progressbar',
+        SEATBELT: 'asc-hud:webview:seatbelt',
     },
     RPC: {},
 };
