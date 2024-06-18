@@ -1,7 +1,17 @@
 import alt from 'alt-client';
 import { useWebview } from '@Client/webview/index.js';
 import { HUDEvents } from '../shared/src/events.js';
-import './src/seatbelt.js';
+import { HudConfig } from '../shared/config.js';
+
+if (HudConfig.enableSeatbelt) {
+    import('./src/seatbelt.js')
+        .then(module => {
+            console.log('Seatbelt module loaded:', module);
+        })
+        .catch(error => {
+            console.error('Error loading seatbelt module:', error);
+        });
+}
 
 useWebview().show('Hud', 'overlay');
 

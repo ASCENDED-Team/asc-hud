@@ -4,12 +4,12 @@ import { useWebview } from '@Server/player/webview.js';
 import { HUDEvents } from '../../shared/src/events.js';
 
 function useHudAPI() {
-    // Functions
     function seatbelt(player: alt.Player) {
         if (!player.vehicle) return;
 
         alt.emitClient(player, HUDEvents.ToClient.SEATBELT);
     }
+
     function pushFuel(player: alt.Player, fuel: number) {
         const WebView = useWebview(player);
 
