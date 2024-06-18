@@ -11,9 +11,12 @@ function setSeatbelt() {
         value = false;
     }
 
-    value
-        ? native.setVehicleDoorsLocked(alt.Player.local.vehicle, 4)
-        : native.setVehicleDoorsLocked(alt.Player.local.vehicle, 0);
+    if (alt.Player.local.vehicle) {
+        value
+            ? native.setVehicleDoorsLocked(alt.Player.local.vehicle, 4)
+            : native.setVehicleDoorsLocked(alt.Player.local.vehicle, 0);
+    }
+
     alt.Player.local.setMeta('SEATBELT', value);
     native.setPedConfigFlag(alt.Player.local.scriptID, 32, value);
 

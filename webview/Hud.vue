@@ -74,6 +74,8 @@ const seatBelt = ref(false);
 const onlinePlayers = ref(0);
 
 function setSeatbelt(value) {
+    if (value === seatBelt.value) return;
+
     seatBelt.value = value;
 
     if (!inVehicle.value) return;
