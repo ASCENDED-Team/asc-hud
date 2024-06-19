@@ -17,7 +17,7 @@ if(HudConfig.checkForUpdates) {
         Our Discord: https://discord.gg/HTKM9NdhVa 
         */
         const apiKey = 'qcsWTe_olrldSoni3K8AHkTeDCeu2rJiG5AKeqAWBBc'; 
-        const url = `http://api.rebar-ascended.dev:5072/versioncheck-api?url=ascended-team/asc-hud&version=${hudVersion}&apiKey=${apiKey}`;
+        const url = `https://api.rebar-ascended.dev/versioncheck-api?url=ascended-team/asc-hud&version=${hudVersion}&apiKey=${apiKey}`;
     
         try {
             const response = await fetch(url);
