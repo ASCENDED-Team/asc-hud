@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref, toRefs, defineProps, onMounted } from 'vue';
+import { watch, ref, toRefs, onMounted } from 'vue';
 
 const props = defineProps(['fuel']);
 const { fuel } = toRefs(props);
