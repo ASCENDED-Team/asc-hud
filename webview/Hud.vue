@@ -27,7 +27,9 @@
                 :locked="locked"
                 :headlights="headlights"
                 :highbeams="highbeams"
-                :isMetric="HudConfig.metric"
+                :isMetric="HudConfig.forceUnit ? HudConfig.forcedUnit : isMetric"
+                :useKnots="HudConfig.useKnots"
+                :vehicleClass="vehicleClass"
                 :seatBelt="seatBelt"
             />
         </Transition>
@@ -68,6 +70,8 @@ const {
     inVehicle,
     maxGear,
     time,
+    isMetric,
+    vehicleClass,
 } = usePlayerStats();
 
 const seatBelt = ref(false);
