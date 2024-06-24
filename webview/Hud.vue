@@ -27,7 +27,7 @@
                 :locked="locked"
                 :headlights="headlights"
                 :highbeams="highbeams"
-                :isMetric="isMetric"
+                :isMetric="HudConfig.forceUnit ? HudConfig.forcedUnit : isMetric"
                 :useKnots="HudConfig.useKnots"
                 :vehicleClass="vehicleClass"
                 :seatBelt="seatBelt"

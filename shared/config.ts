@@ -1,5 +1,6 @@
 export const HudConfig = {
-    metric: true,
+    forcedUnit: true, // true for metric system, false for imperial system
+    forceUnit: true,
     useKnots: true,
     domain: 'REBAR-ASCENDED.DEV',
     maxPlayers: 256,
