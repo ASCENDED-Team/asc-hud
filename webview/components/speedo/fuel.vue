@@ -5,7 +5,7 @@
                 <path
                     id="fuel-bar"
                     :style="{ 'stroke-dashoffset': fuelBar }"
-                    class="stroke-[var(--hud-color)]"
+                    class="stroke-[var(--hud-color)] transition-all duration-[2s] ease-in-out"
                     stroke-width="8px"
                     d="m0,4c81.13,0,146.9,65.77,146.9,146.9,0,28.56-8.15,55.22-22.25,77.77"
                 />
@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref, toRefs, defineProps, onMounted } from 'vue';
+import { watch, ref, toRefs, onMounted } from 'vue';
 
 const props = defineProps(['fuel']);
 const { fuel } = toRefs(props);
@@ -47,7 +47,7 @@ watch(fuel, () => {
 
 onMounted(() => {
     fuelBar.value = calculateFuel();
-})
+});
 </script>
 
 <style>
