@@ -27,7 +27,7 @@ import { useEvents } from '@Composables/useEvents';
 import { ref, computed } from 'vue';
 import { HUDEvents } from '@Plugins/asc-hud/shared/src/events';
 
-const { speed, gear, maxGear, engineOn, locked, headlights, highbeams, isMetric, seatBelt, vehicleClass, useKnots } =
+const { speed, gear, maxGear, engineOn, locked, headlights, highbeams, isMetric, useKnots, vehicleClass, seatBelt } =
     defineProps([
         'speed',
         'gear',
@@ -37,9 +37,9 @@ const { speed, gear, maxGear, engineOn, locked, headlights, highbeams, isMetric,
         'headlights',
         'highbeams',
         'isMetric',
-        'seatBelt',
-        'vehicleClass',
         'useKnots',
+        'vehicleClass',
+        'seatBelt',
     ]);
 
 const fuelPercentage = ref(0);
@@ -47,63 +47,37 @@ events.on(HUDEvents.WebView.PUSH_FUEL, (value: number) => {
     fuelPercentage.value = value;
 });
 
-const unitOld = computed(() => {
-    if (useKnots) {
-        if (vehicleClass > 13 && vehicleClass < 17) {
-            return 'KN';
-        }
-    }
-
-    return isMetric ? 'KM/H' : 'Mph';
-});
-
 function getUnitAndSpeed(_useKnots: boolean, _vehicleClass: number, _isMetric: boolean, _speed: number) {
-    let _unit;
-    let _calcSpeed;
+    let _unit: string;
+    let _calcSpeed: number;
 
-    if (useKnots) {
+    if (_useKnots) {
         if (_vehicleClass > 13 && _vehicleClass < 17) {
             _unit = 'KN';
+        } else {
+            _unit = _isMetric ? 'KM/H' : 'Mph';
         }
+    } else {
+        _unit = _isMetric ? 'KM/H' : 'Mph';
     }
-
-    _unit = _isMetric ? 'KM/H' : 'Mph';
 
     switch (_unit) {
         case 'KM/H':
-            _calcSpeed = speed * 3.6;
+            _calcSpeed = _speed * 3.6;
             break;
         case 'Mph':
-            _calcSpeed = speed * 2.236936;
+            _calcSpeed = _speed * 2.236936;
             break;
         case 'KN':
-            _calcSpeed = speed * 1.943844;
+            _calcSpeed = _speed * 1.943844;
             break;
         default:
-            _calcSpeed = speed * 3.6;
+            _calcSpeed = _speed * 3.6;
             break;
     }
 
     return { unit: _unit, speed: _calcSpeed };
 }
-
-// function convertSpeed(speed: number) {
-//     switch (unit.value) {
-//         case 'KM/H':
-//             return speed * 3.6;
-//             break;
-//         case 'Mph':
-//             return speed * 2.236936;
-//             break;
-//         case 'KN':
-//             return speed * 1.943844;
-//             break;
-//         default:
-//             return speed * 3.6;
-//             break;
-//     }
-//     // return isMetric ? speed * 3.6 : speed * 2.236936;
-// }
 </script>
 
 <style></style>
