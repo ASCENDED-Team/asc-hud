@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-
 const events = useEvents();
 import TachoMeter from './speedo/tachometer.vue';
 import Fuel from './speedo/fuel.vue';
@@ -28,22 +27,19 @@ import { useEvents } from '@Composables/useEvents';
 import { ref } from 'vue';
 import { HUDEvents } from '@Plugins/asc-hud/shared/src/events';
 
-const { speed, gear, maxGear, engineOn, locked, headlights, highbeams, isMetric, seatBelt } = defineProps([
-    'speed',
-    'gear',
-    'maxGear',
-    'engineOn',
-    'locked',
-    'headlights',
-    'highbeams',
-    'isMetric',
-    'seatBelt',
-]);
-
-const fuelPercentage = ref(0);
-events.on(HUDEvents.WebView.PUSH_FUEL, (value: number) => {
-    fuelPercentage.value = value
-});
+const { speed, gear, maxGear, engineOn, locked, headlights, highbeams, isMetric, seatBelt, fuelPercentage } =
+    defineProps([
+        'speed',
+        'gear',
+        'maxGear',
+        'engineOn',
+        'locked',
+        'headlights',
+        'highbeams',
+        'isMetric',
+        'seatBelt',
+        'fuelPercentage',
+    ]);
 
 function convertSpeed(speed: number) {
     return isMetric ? speed * 3.6 : speed * 2.236936;

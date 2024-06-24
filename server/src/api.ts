@@ -11,6 +11,7 @@ function useHudAPI() {
     }
 
     function pushFuel(player: alt.Player, fuel: number) {
+        if (!player.vehicle) return;
         const WebView = useWebview(player);
 
         WebView.emit(HUDEvents.WebView.PUSH_FUEL, fuel);

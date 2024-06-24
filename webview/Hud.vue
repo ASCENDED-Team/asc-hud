@@ -29,12 +29,13 @@
                 :highbeams="highbeams"
                 :isMetric="HudConfig.metric"
                 :seatBelt="seatBelt"
+                :fuelPercentage="fuelPercentage"
             />
         </Transition>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, computed, ref } from 'vue';
 import { usePlayerStats } from '../../../../webview/composables/usePlayerStats';
 import { useMinimap } from '../../../../webview/composables/useMinimap';
@@ -72,6 +73,7 @@ const {
 
 const seatBelt = ref(false);
 const onlinePlayers = ref(0);
+let coordsBottom: number;
 
 function setSeatbelt(value) {
     if (value === seatBelt.value) return;
@@ -110,7 +112,13 @@ const getVitalityStylePosition = computed(() => {
 
     if (HudConfig.hideMinimapOnFoot && !inVehicle.value) {
         let coordsHeight = document.getElementById('coordsDiv').offsetHeight;
-        let coordsBottom = document.getElementById('coordsDiv').style.bottom || 10;
+        let coordsBottomStr = document.getElementById('coordsDiv').style.bottom;
+
+        if (coordsBottomStr) {
+            coordsBottom = parseInt(coordsBottomStr, 10);
+        } else {
+            coordsBottom = 0;
+        }
 
         return [
             `left: ${minimap.value.left - 8}px`,
@@ -140,12 +148,16 @@ const formattedTime = computed(() => {
     return formatted;
 });
 
+const fuelPercentage = ref(0);
 onMounted(() => {
     events.on(HUDEvents.WebView.SEATBELT, setSeatbelt);
     events.on(HUDEvents.WebView.UPDATE_PLAYERS, (players) => {
         onlinePlayers.value = players;
     });
 
+    events.on(HUDEvents.WebView.PUSH_FUEL, (value: number) => {
+        fuelPercentage.value = value;
+    });
     document.documentElement.style.setProperty('--hud-color', HudConfig.color);
 });
 </script>
