@@ -5,11 +5,13 @@ import { HudConfig } from '../shared/config.js';
 
 if (HudConfig.enableSeatbelt) {
     import('./src/seatbelt.js')
-        .then(module => {
-            console.log('Seatbelt module loaded:', module);
+        .then((module) => {
+            console.log('Seatbelt module loaded:');
+            // console.log('Seatbelt module loaded:', module);
         })
-        .catch(error => {
-            console.error('Error loading seatbelt module:', error);
+        .catch((error) => {
+            console.error('Error loading seatbelt module:');
+            // console.error('Error loading seatbelt module:', error);
         });
 }
 

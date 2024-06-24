@@ -26,10 +26,27 @@
 <script setup>
 import { watch, ref, toRefs } from 'vue';
 
-const props = defineProps(['speed', 'isMetric']);
-const { speed, isMetric } = toRefs(props);
+const props = defineProps(['unitSpeed']);
+const { unitSpeed } = toRefs(props);
 
-const maxSpeed = isMetric ? 280 : 180;
+//const maxSpeed = isMetric ? 280 : 180;
+
+let maxSpeed;
+
+switch (unitSpeed.unit) {
+    case 'KM/H':
+        maxSpeed = 280;
+        break;
+    case 'Mph':
+        maxSpeed = 180;
+        break;
+    case 'KN':
+        maxSpeed = 150;
+        break;
+    default:
+        maxSpeed = 280;
+        break;
+}
 
 const meterBar = ref(615);
 const meterBG = ref(0);
@@ -42,7 +59,7 @@ function updateMeterBar(speed) {
     meterBG.value = newStrokeDashoffsetBG;
 }
 
-watch(speed, (newSpeed) => {
+watch(unitSpeed.speed, (newSpeed) => {
     updateMeterBar(newSpeed);
 });
 </script>
