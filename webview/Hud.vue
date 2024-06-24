@@ -113,19 +113,20 @@ const getVitalityStylePosition = computed(() => {
     if (HudConfig.hideMinimapOnFoot && !inVehicle.value) {
         let coordsHeight = document.getElementById('coordsDiv').offsetHeight;
         let coordsBottomStr = document.getElementById('coordsDiv').style.bottom;
+        if (coordsHeight !== null) {
+            if (coordsBottomStr) {
+                coordsBottom = parseInt(coordsBottomStr, 10);
+            } else {
+                coordsBottom = 0;
+            }
 
-        if (coordsBottomStr) {
-            coordsBottom = parseInt(coordsBottomStr, 10);
-        } else {
-            coordsBottom = 0;
+            return [
+                `left: ${minimap.value.left - 8}px`,
+                `bottom: ${coordsHeight * 2 - coordsBottom}px`,
+                `width: ${minimap.value.width}px`,
+                `flex-direction: row`,
+            ];
         }
-
-        return [
-            `left: ${minimap.value.left - 8}px`,
-            `bottom: ${coordsHeight * 2 - coordsBottom}px`,
-            `width: ${minimap.value.width}px`,
-            `flex-direction: row`,
-        ];
     }
 
     return [`left: ${minimap.value.left + minimap.value.width}px`, `top: ${minimap.value.top}px`];
