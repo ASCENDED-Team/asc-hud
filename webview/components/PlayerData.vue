@@ -24,7 +24,7 @@
 
 <script setup>
 import { HudConfig } from '@Plugins/asc-hud/shared/config';
-import { defineProps, computed } from 'vue';
+import { computed } from 'vue';
 
 const { domain, players, time } = defineProps(['domain', 'players', 'time']);
 
