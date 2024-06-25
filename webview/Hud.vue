@@ -29,13 +29,12 @@
                 :highbeams="highbeams"
                 :isMetric="HudConfig.metric"
                 :seatBelt="seatBelt"
-                :fuelPercentage="fuelPercentage"
             />
         </Transition>
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { onMounted, computed, ref } from 'vue';
 import { usePlayerStats } from '../../../../webview/composables/usePlayerStats';
 import { useMinimap } from '../../../../webview/composables/useMinimap';
@@ -73,7 +72,6 @@ const {
 
 const seatBelt = ref(false);
 const onlinePlayers = ref(0);
-let coordsBottom: number;
 
 function setSeatbelt(value) {
     if (value === seatBelt.value) return;
@@ -111,22 +109,15 @@ const getVitalityStylePosition = computed(() => {
     }
 
     if (HudConfig.hideMinimapOnFoot && !inVehicle.value) {
-        let coordsHeight = document.getElementById('coordsDiv').offsetHeight;
-        let coordsBottomStr = document.getElementById('coordsDiv').style.bottom;
-        if (coordsHeight !== null) {
-            if (coordsBottomStr) {
-                coordsBottom = parseInt(coordsBottomStr, 10);
-            } else {
-                coordsBottom = 0;
-            }
+        let coordsHeight = document.getElementById('coordsDiv')?.offsetHeight || 30;
+        let coordsBottom = document.getElementById('coordsDiv')?.style.bottom;
 
-            return [
-                `left: ${minimap.value.left - 8}px`,
-                `bottom: ${coordsHeight * 2 - coordsBottom}px`,
-                `width: ${minimap.value.width}px`,
-                `flex-direction: row`,
-            ];
-        }
+        return [
+            `left: ${minimap.value.left - 8}px`,
+            `bottom: ${coordsHeight * 2 - parseInt(coordsBottom)}px`,
+            `width: ${minimap.value.width}px`,
+            `flex-direction: row`,
+        ];
     }
 
     return [`left: ${minimap.value.left + minimap.value.width}px`, `top: ${minimap.value.top}px`];
@@ -149,16 +140,12 @@ const formattedTime = computed(() => {
     return formatted;
 });
 
-const fuelPercentage = ref(0);
 onMounted(() => {
     events.on(HUDEvents.WebView.SEATBELT, setSeatbelt);
     events.on(HUDEvents.WebView.UPDATE_PLAYERS, (players) => {
         onlinePlayers.value = players;
     });
 
-    events.on(HUDEvents.WebView.PUSH_FUEL, (value: number) => {
-        fuelPercentage.value = value;
-    });
     document.documentElement.style.setProperty('--hud-color', HudConfig.color);
 });
 </script>
