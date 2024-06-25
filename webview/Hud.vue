@@ -35,7 +35,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, computed, ref } from 'vue';
 import { usePlayerStats } from '../../../../webview/composables/usePlayerStats';
 import { useMinimap } from '../../../../webview/composables/useMinimap';
