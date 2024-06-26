@@ -11,5 +11,6 @@ export const HudConfig = {
     hideVehicleClass: true,
     hideStreetName: true,
     hideAreaName: true,
-    checkForUpdates: true
+    checkForUpdates: true,
+    showOdometer: false,
 };

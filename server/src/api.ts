@@ -17,6 +17,13 @@ function useHudAPI() {
         WebView.emit(HUDEvents.WebView.PUSH_FUEL, fuel);
     }
 
+    function pushMilage(player: alt.Player, milage: number) {
+        if (!player.vehicle) return;
+        const WebView = useWebview(player);
+
+        WebView.emit(HUDEvents.WebView.PUSH_MILAGE, milage);
+    }
+
     async function createProgressBar(
         player: alt.Player,
         time: number,
@@ -38,6 +45,7 @@ function useHudAPI() {
     return {
         seatbelt,
         pushFuel,
+        pushMilage,
         createProgressBar,
     };
 }

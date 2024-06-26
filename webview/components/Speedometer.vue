@@ -7,6 +7,7 @@
             <Fuel :fuel="fuelPercentage" />
         </div>
         <Speed :speed="convertSpeed(speed).toFixed(0)" :isMetric="isMetric" />
+        <Odometer v-if="HudConfig.showOdometer" :milage="milage" :isMetric="isMetric" />
         <VehicleData
             :engineOn="engineOn"
             :locked="locked"
@@ -23,11 +24,13 @@ import TachoMeter from './speedo/tachometer.vue';
 import Fuel from './speedo/fuel.vue';
 import Speed from './speedo/speed.vue';
 import VehicleData from './speedo/vehicledata.vue';
+import Odometer from './speedo/odometer.vue';
 import { useEvents } from '@Composables/useEvents';
 import { ref } from 'vue';
 import { HUDEvents } from '@Plugins/asc-hud/shared/src/events';
+import { HudConfig } from '@Plugins/asc-hud/shared/config';
 
-const { speed, gear, maxGear, engineOn, locked, headlights, highbeams, isMetric, seatBelt, fuelPercentage } =
+const { speed, gear, maxGear, engineOn, locked, headlights, highbeams, isMetric, seatBelt, fuelPercentage, milage } =
     defineProps([
         'speed',
         'gear',
@@ -39,6 +42,7 @@ const { speed, gear, maxGear, engineOn, locked, headlights, highbeams, isMetric,
         'isMetric',
         'seatBelt',
         'fuelPercentage',
+        'milage',
     ]);
 
 function convertSpeed(speed: number) {
