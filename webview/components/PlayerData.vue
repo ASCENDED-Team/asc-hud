@@ -17,12 +17,13 @@
         </div>
         <div class="hud-id flex flex-col items-end">
             <span class="text-xs font-bold text-slate-300">ID</span>
-            <span class="text-xs text-slate-200">123</span>
+            <span class="text-xs text-slate-200">{{ character.id }}</span>
         </div>
     </div>
 </template>
 
 <script setup>
+import { useSyncedMeta } from '@Composables/useSyncedMeta';
 import { HudConfig } from '@Plugins/asc-hud/shared/config';
 import { computed } from 'vue';
 
@@ -31,6 +32,8 @@ const { domain, players, time } = defineProps(['domain', 'players', 'time']);
 const formattedDate = computed(() => {
     return new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }).replace(/\//g, '.');
 });
+
+const character = useSyncedMeta().getCharacter();
 </script>
 
 <style></style>
