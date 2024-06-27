@@ -12,5 +12,5 @@ export const HudConfig = {
     hideStreetName: true,
     hideAreaName: true,
     checkForUpdates: true,
-    onlinePlayersInterval: 1000,
+    onlinePlayersInterval: 15000,
 };

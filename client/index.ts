@@ -16,3 +16,8 @@ alt.setInterval(() => {
     const onlinePlayers = alt.Player.all.length;
     useWebview().emit(HUDEvents.WebView.UPDATE_PLAYERS, onlinePlayers);
 }, HudConfig.onlinePlayersInterval);
+
+alt.on('connectionComplete', () => {
+    const onlinePlayers = alt.Player.all.length;
+    useWebview().emit(HUDEvents.WebView.UPDATE_PLAYERS, onlinePlayers);
+});
