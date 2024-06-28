@@ -6,7 +6,9 @@ import { HudConfig } from '../shared/config.js';
 import { useRebar } from '@Server/index.js';
 
 const Rebar = useRebar();
+
 const SyncedBinder = Rebar.systems.useStreamSyncedBinder();
+SyncedBinder.syncCharacterKey('id');
 
 HudServerConfig.init();
 
@@ -63,7 +65,3 @@ if (HudConfig.checkForUpdates) {
         requestLatestVersion();
     }, 250);
 }
-
-alt.on('playerConnect', (player: alt.Player) => {
-    SyncedBinder.syncCharacterKey('id');
-});

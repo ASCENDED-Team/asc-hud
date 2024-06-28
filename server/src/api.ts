@@ -10,11 +10,13 @@ function useHudAPI() {
         alt.emitClient(player, HUDEvents.ToClient.SEATBELT);
     }
 
-    function pushFuel(player: alt.Player, fuel: number) {
-        if (!player.vehicle) return;
+    function pushData<T>(player: alt.Player, event: string, data: T, isVehicle = false) {
+        if (isVehicle) {
+            if (!player.vehicle) return;
+        }
         const WebView = useWebview(player);
 
-        WebView.emit(HUDEvents.WebView.PUSH_FUEL, fuel);
+        WebView.emit(event, data);
     }
 
     async function createProgressBar(
@@ -35,10 +37,15 @@ function useHudAPI() {
         }
     }
 
+    function GetHUDEvents() {
+        return HUDEvents;
+    }
+
     return {
         seatbelt,
-        pushFuel,
+        pushData,
         createProgressBar,
+        GetHUDEvents,
     };
 }
 
