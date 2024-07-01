@@ -30,6 +30,7 @@
                 :isMetric="HudConfig.metric"
                 :seatBelt="seatBelt"
                 :fuelPercentage="fuelPercentage"
+                :milage="milage"
             />
         </Transition>
     </div>
@@ -74,6 +75,7 @@ const {
 const seatBelt = ref(false);
 const onlinePlayers = ref(0);
 const fuelPercentage = ref(0);
+const milage = ref(0);
 
 function setSeatbelt(value) {
     if (value === seatBelt.value) return;
@@ -149,6 +151,9 @@ onMounted(() => {
     });
     events.on(HUDEvents.WebView.PUSH_FUEL, (value: number) => {
         fuelPercentage.value = value;
+    });
+    events.on(HUDEvents.WebView.PUSH_MILAGE, (value: number) => {
+        milage.value = parseFloat(value.toFixed(0));
     });
 
     document.documentElement.style.setProperty('--hud-color', HudConfig.color);
