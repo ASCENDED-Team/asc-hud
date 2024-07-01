@@ -19,12 +19,20 @@ messenger.commands.register({
 messenger.commands.register({
     name: '/testbar',
     desc: 'test your progress bar. time bgcolor progresscolor textcolor',
-    callback: async (player: alt.Player, time: number, bgColor: string, progressColor: string, textColor: string) => {
-        if (!time) {
-            time = 1000 * 10; // 10 Seconds
+    callback: async (player: alt.Player, time: string, bgColor: string, progressColor: string, textColor: string) => {
+        let parsedTime = parseInt(time);
+        if (isNaN(parsedTime)) {
+            parsedTime = 10000; // Default to 10 seconds if parsing fails
         }
-        
-        HudAPI.createProgressBar(player, time, bgColor, progressColor, textColor, testFunctionForCallbackProgress);
+
+        HudAPI.createProgressBar(
+            player,
+            parseInt(time),
+            bgColor,
+            progressColor,
+            textColor,
+            testFunctionForCallbackProgress,
+        );
     },
 });
 
