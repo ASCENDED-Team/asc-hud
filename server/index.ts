@@ -12,56 +12,43 @@ SyncedBinder.syncCharacterKey('id');
 
 HudServerConfig.init();
 
-// Checks for updates...
+// Check for Updates...
 if (HudConfig.checkForUpdates) {
-    const hudVersion = 'v1.2';
     async function requestLatestVersion() {
-        /* 
-        ASCENDED-Team API Key. This will only work for our plugins.
-        If you want to use our version check API - Feel free to contact us!
-        Our Discord: https://discord.gg/HTKM9NdhVa 
-        */
         const apiKey = 'qcsWTe_olrldSoni3K8AHkTeDCeu2rJiG5AKeqAWBBc';
-        const url = `https://api.rebar-ascended.dev/versioncheck-api?url=ascended-team/asc-hud&version=${hudVersion}&apiKey=${apiKey}`;
+        const repoUrl = 'ascended-team/asc-hud';
 
         try {
-            const response = await fetch(url);
+            const commitResponse = await fetch(`https://api.github.com/repos/${repoUrl}/commits/main`);
+            if (!commitResponse.ok) {
+                throw new Error(`Failed to fetch commit hash: ${commitResponse.status}`);
+            }
+            const commitData = await commitResponse.json();
+            const currentCommitHash = commitData.sha;
+
+            const apiUrl = `http://api.rebar-ascended.dev:5072/versioncheck-api?url=${repoUrl}&version=${currentCommitHash}&apiKey=${apiKey}`;
+
+            const response = await fetch(apiUrl);
             if (!response.ok) {
                 throw new Error(`Request failed with status ${response.status}`);
             }
-            const data: {
-                repository: string;
-                release: string;
-                releasedAt: string;
-                commitHash: string;
-                latestCommit: string;
-                isOutdated: boolean;
-            } = await response.json();
+            const data = await response.json();
 
+            let message = `[\x1b[35mASCENDED-Repository\x1b[0m] => \x1b[35m${data.repository}\x1b[0m is `;
             if (data.isOutdated) {
-                alt.logWarning(
-                    `[ASCENDED-API]: Your plugin: ${data.repository} is outdated. Latest Commit: ${data.latestCommit} | Version (${data.release}) | ${data.releasedAt}`,
-                );
+                message += `\x1b[31mOUTDATED\x1b[0m`;
             } else {
-                alt.logWarning(
-                    `[ASCENDED-API]: Your plugin: ${data.repository} is up to date. Latest Commit: ${data.latestCommit} | Version (${data.release}) | ${data.releasedAt}`,
-                );
+                message += '\x1b[32mUPDATED\x1b[0m';
             }
+            message += `. Latest Commit: ${data.latestCommit} (${data.latestCommitHash.slice(0, 5)})`;
+
+            alt.log(message);
         } catch (error) {
-            if (error.response) {
-                alt.logWarning(
-                    `[ASCENDED-Versioncheck-API] => No Response from Ascended API Server... Status: ${error.response.status}`,
-                );
-            } else {
-                alt.logWarning(
-                    `[ASCENDED-Versioncheck-API] => No Response from Ascended API Server... ${error.message}`,
-                );
-            }
+            alt.logWarning(
+                `[\x1b[35mASCENDED\x1b[0m-Versioncheck-API] => \x1b[31mError checking for updates:\x1b[0m \x1b[35m${error.message}\x1b[0m`,
+            );
         }
-        return null;
     }
 
-    setTimeout(() => {
-        requestLatestVersion();
-    }, 250);
+    requestLatestVersion();
 }
